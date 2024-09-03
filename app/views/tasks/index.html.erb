@@ -1,0 +1,18 @@
+<h1>Task Manager</h1>
+<div data-controller="tasks">
+  <%= form_with(model: Task.new, remote: true, data: { target: 'tasks.form',action: 'submit->tasks#createTask' }) do |form| %>
+      <div>
+        <%= form.label :description %>
+        <%= form.text_field :description, data: { target: 'tasks.description' } %>
+      </div>
+      <div>
+        <%= form.submit 'Create Task' %>
+      </div>
+      <%= form.hidden_field :authenticity_token, value: form_authenticity_token %>
+    <% end %>
+  <br>
+  <input type="text" data-tasks-target="input" data-action="input->tasks#performSearch" placeholder="Search tasks...">
+  <ul data-tasks-target="taskList">
+    <%= render partial: 'task', locals: { tasks: @tasks } %>
+  </ul>
+</div>
